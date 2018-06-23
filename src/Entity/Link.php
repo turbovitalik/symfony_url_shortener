@@ -33,7 +33,7 @@ class Link
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -41,7 +41,7 @@ class Link
     /**
      * @return string
      */
-    public function getOriginalUrl(): string
+    public function getOriginalUrl(): ?string
     {
         return $this->originalUrl;
     }
@@ -57,7 +57,7 @@ class Link
     /**
      * @return string
      */
-    public function getShortUrl(): string
+    public function getShortUrl(): ?string
     {
         return $this->shortUrl;
     }
