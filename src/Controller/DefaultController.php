@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Link;
 use App\Form\LinkType;
 use App\Repository\LinkRepository;
@@ -43,10 +42,15 @@ class DefaultController extends Controller
 
             //@todo: check shortcode for uniqueness
 
+
+            //@todo: refactor this
             if (null === $link->getShortCode()) {
                 $shortCode = $linkShortener->generateShortCode();
-                $link->setShortCode($shortCode);
+            } else {
+                $shortCode = $form->get('shortCode')->getData();
             }
+
+            $link->setShortCode($shortCode);
 
             $expiresIn = $form->get('expires_in')->getData();
             $token = $tokenGenerator->generateToken();
