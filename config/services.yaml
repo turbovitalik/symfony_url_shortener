@@ -28,5 +28,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     AppBundle\Service\TinyWebShortener: ~
+    AppBundle\Service\DbLogger: ~
 
     AppBudnle\Service\LinkShortenerInterface: '@AppBundle\Service\TinyWebShortener'
+    AppBundle\Service\StatLoggerInterface: '@AppBundle\Service\DbLogger'

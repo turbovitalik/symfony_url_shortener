@@ -3,38 +3,17 @@
 namespace App\Repository;
 
 use App\Entity\Link;
-use Doctrine\ORM\EntityManagerInterface;
 
-class LinkRepository
+class LinkRepository extends BaseEntityRepository
 {
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
-     */
-    private $repository;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * LinkRepository constructor.
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-        $this->repository = $entityManager->getRepository(Link::class);
-    }
-
     public function findByShortCode($code): ?Link
     {
-        return $this->repository->findOneBy(['shortUrl' => $code]);
+        return $this->getRepository()->findOneBy(['shortUrl' => $code]);
     }
 
     public function findByToken($token): ?Link
     {
-        return $this->repository->findOneBy(['token' => $token]);
+        return $this->getRepository()->findOneBy(['token' => $token]);
     }
 
     /**
@@ -44,5 +23,13 @@ class LinkRepository
     {
         $this->entityManager->persist($link);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEntityClass(): string
+    {
+        return Link::class;
     }
 }
