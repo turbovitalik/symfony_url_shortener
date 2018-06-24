@@ -29,7 +29,7 @@ class StatisticsEntry
     /**
      * @var Link
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Link")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Link", inversedBy="statEntries")
      */
     private $link;
 

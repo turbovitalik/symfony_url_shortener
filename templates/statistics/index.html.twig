@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for entry in statistics %}
+            <li>{{ entry.userAgent }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

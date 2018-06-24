@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -51,6 +53,21 @@ class Link
     private $expiresAt;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\StatisticsEntry", mappedBy="link")
+     */
+    private $statistics;
+
+    /**
+     * Link constructor.
+     */
+    public function __construct()
+    {
+        $this->statistics = new ArrayCollection();
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int
@@ -83,7 +100,7 @@ class Link
     }
 
     /**
-     * @param string $shortUrl
+     * @param string $shortCode
      */
     public function setShortCode(string $shortCode): void
     {
@@ -120,5 +137,13 @@ class Link
     public function setExpiresAt(int $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getStatistics(): ?Collection
+    {
+        return $this->statistics;
     }
 }
