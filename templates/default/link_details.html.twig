@@ -1,3 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
 {% for label, messages in app.flashes %}
     {% for message in messages %}
         <div class="flash-{{ label }}">
@@ -5,3 +8,8 @@
         </div>
     {% endfor %}
 {% endfor %}
+
+<p><strong>Original link:</strong> {{ link.originalUrl }}</p>
+<p><strong>Short link: </strong> {{ link.shortUrl }}</p>
+<p><strong>Statistics for your link: </strong> {{ path('link_statistics', {'token': link.token}) }}</p>
+{% endblock %}

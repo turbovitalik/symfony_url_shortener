@@ -27,6 +27,16 @@ class LinkRepository
         $this->repository = $entityManager->getRepository(Link::class);
     }
 
+    public function findByShortCode($code): ?Link
+    {
+        return $this->repository->findOneBy(['shortUrl' => $code]);
+    }
+
+    public function findByToken($token): ?Link
+    {
+        return $this->repository->findOneBy(['token' => $token]);
+    }
+
     /**
      * @param Link $link
      */

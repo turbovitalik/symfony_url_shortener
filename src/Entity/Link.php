@@ -31,6 +31,12 @@ class Link
     private $shortUrl;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=50)
+     */
+    private $token;
+
+    /**
      * @return int
      */
     public function getId(): ?int
@@ -68,5 +74,21 @@ class Link
     public function setShortUrl(string $shortUrl): void
     {
         $this->shortUrl = $shortUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
     }
 }

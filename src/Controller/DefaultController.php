@@ -10,6 +10,7 @@ use App\Service\LinkShortenerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class DefaultController extends Controller
 {
@@ -28,7 +29,7 @@ class DefaultController extends Controller
     /**
      * @Route("/add", name="add_link")
      */
-    public function addAction(Request $request, LinkRepository $linkRepository, LinkShortenerInterface $linkShortener)
+    public function addAction(Request $request, LinkRepository $linkRepository, LinkShortenerInterface $linkShortener, TokenGeneratorInterface $tokenGenerator)
     {
         $pageName = 'Add new link page';
 
@@ -44,6 +45,9 @@ class DefaultController extends Controller
                 $link = $linkShortener->shorten($link);
             }
 
+            $token = $tokenGenerator->generateToken();
+            $link->setToken($token);
+
             $linkRepository->save($link);
 
             $this->addFlash(
@@ -51,7 +55,7 @@ class DefaultController extends Controller
                 'Short link was created'
             );
 
-            return $this->redirectToRoute('link_details', ['id' => 1]);
+            return $this->render('default/link_details.html.twig', ['link' => $link]);
         }
 
         return $this->render('default/add.html.twig', [
