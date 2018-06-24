@@ -10,6 +10,8 @@
 {% endfor %}
 
 <p><strong>Original link:</strong> {{ link.originalUrl }}</p>
-<p><strong>Short link: </strong> {{ link.shortUrl }}</p>
-<p><strong>Statistics for your link: </strong> {{ path('link_statistics', {'token': link.token}) }}</p>
+<p><strong>Short link: </strong> <a target="_blank" href="{{ path('short_code', {'code': link.shortCode}) }}">Open</a></p>
+<p><strong>Statistics for your link: </strong>
+    <a target="_blank" href="{{ path('link_statistics', {'token': link.token}) }}">See info</a>
+</p>
 {% endblock %}

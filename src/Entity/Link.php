@@ -28,13 +28,20 @@ class Link
      * @var string
      * @ORM\Column(type="string", length=20)
      */
-    private $shortUrl;
+    private $shortCode;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=50)
      */
     private $token;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $expiresAt;
 
     /**
      * @return int
@@ -63,17 +70,17 @@ class Link
     /**
      * @return string
      */
-    public function getShortUrl(): ?string
+    public function getShortCode(): ?string
     {
-        return $this->shortUrl;
+        return $this->shortCode;
     }
 
     /**
      * @param string $shortUrl
      */
-    public function setShortUrl(string $shortUrl): void
+    public function setShortCode(string $shortCode): void
     {
-        $this->shortUrl = $shortUrl;
+        $this->shortCode = $shortCode;
     }
 
     /**
@@ -90,5 +97,21 @@ class Link
     public function setToken(string $token): void
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpiresAt(): int
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * @param int $expiresAt
+     */
+    public function setExpiresAt(int $expiresAt): void
+    {
+        $this->expiresAt = $expiresAt;
     }
 }

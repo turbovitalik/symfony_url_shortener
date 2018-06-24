@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Link;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,8 +20,20 @@ class LinkType extends AbstractType
     {
         $builder
             ->add('originalUrl', TextType::class)
-            ->add('shortUrl', TextType::class, [
+            ->add('shortCode', TextType::class, [
                 'required' => false,
+            ])
+            ->add('expires_in', ChoiceType::class, [
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => [
+                    '1 minute' => 60,
+                    '1 hour' => 3600,
+                    '1 day' => 3600*24,
+                    '1 week' => 3600*24*7
+                ],
+                'mapped' => false,
+                'data' => 60,
             ])
             ->add('submit', SubmitType::class)
         ;

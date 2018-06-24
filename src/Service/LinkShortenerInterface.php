@@ -6,5 +6,5 @@ use App\Entity\Link;
 
 interface LinkShortenerInterface
 {
-    public function shorten(Link $link);
+    public function generateShortCode();
 }

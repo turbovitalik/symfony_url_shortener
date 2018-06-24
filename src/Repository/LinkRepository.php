@@ -8,7 +8,7 @@ class LinkRepository extends BaseEntityRepository
 {
     public function findByShortCode($code): ?Link
     {
-        return $this->getRepository()->findOneBy(['shortUrl' => $code]);
+        return $this->getRepository()->findOneBy(['shortCode' => $code]);
     }
 
     public function findByToken($token): ?Link

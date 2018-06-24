@@ -41,12 +41,19 @@ class DefaultController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if (null === $link->getShortUrl()) {
-                $link = $linkShortener->shorten($link);
+            //@todo: check shortcode for uniqueness
+
+            if (null === $link->getShortCode()) {
+                $shortCode = $linkShortener->generateShortCode();
+                $link->setShortCode($shortCode);
             }
 
+            $expiresIn = $form->get('expires_in')->getData();
             $token = $tokenGenerator->generateToken();
+
+
             $link->setToken($token);
+            $link->setExpiresAt(time() + $expiresIn);
 
             $linkRepository->save($link);
 
