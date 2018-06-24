@@ -22,9 +22,11 @@ class StatisticsController extends Controller
         }
 
         $statistics = $link->getStatistics();
+        $visitsCount = $statistics->count();
 
         return $this->render('statistics/index.html.twig', [
             'statistics' => $statistics,
+            'visitsCount' => $visitsCount,
         ]);
     }
 }

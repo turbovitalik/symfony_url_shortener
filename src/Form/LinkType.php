@@ -29,6 +29,7 @@ class LinkType extends AbstractType
             ])
             ->add('shortCode', TextType::class, [
                 'required' => false,
+                'label' => 'Short link (specify or get it generated automatically) - ' . $_SERVER['HTTP_HOST'] . '/s/'
             ])
             ->add('expires_in', ChoiceType::class, [
                 'expanded' => true,
@@ -42,7 +43,9 @@ class LinkType extends AbstractType
                 'mapped' => false,
                 'data' => 60,
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Shorten',
+            ])
         ;
     }
 
