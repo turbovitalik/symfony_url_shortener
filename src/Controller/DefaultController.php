@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Link;
 use App\Form\LinkType;
 use App\Repository\LinkRepository;
+use App\Service\LinkShortenerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class DefaultController extends Controller
     /**
      * @Route("/add", name="add_link")
      */
-    public function addAction(Request $request, LinkRepository $linkRepository)
+    public function addAction(Request $request, LinkRepository $linkRepository, LinkShortenerInterface $linkShortener)
     {
         $pageName = 'Add new link page';
 
@@ -38,6 +39,11 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if (null === $link->getShortUrl()) {
+                $link = $linkShortener->shorten($link);
+            }
+
             $linkRepository->save($link);
 
             $this->addFlash(
