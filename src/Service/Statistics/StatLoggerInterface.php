@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Statistics;
 
 use App\Entity\Link;
 use Symfony\Component\HttpFoundation\Request;

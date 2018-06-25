@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\ShortCode;
 
 use App\Entity\Link;
 
-class TinyWebShortener implements LinkShortenerInterface
+class FromPrimaryKeyGenerator implements GeneratorInterface
 {
     /**
      * @var string

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\ShortCode;
 
 use App\Entity\Link;
 
-interface LinkShortenerInterface
+interface GeneratorInterface
 {
     public function generateShortCode(Link $link);
 }

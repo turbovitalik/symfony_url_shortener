@@ -27,6 +27,13 @@ class StatisticsEntry
     private $userAgent;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=15)
+     */
+    private $clientIp;
+
+    /**
      * @var Link
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Link", inversedBy="statEntries")
@@ -71,5 +78,21 @@ class StatisticsEntry
     public function setLink(Link $link): void
     {
         $this->link = $link;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientIp(): string
+    {
+        return $this->clientIp;
+    }
+
+    /**
+     * @param string $clientIp
+     */
+    public function setClientIp(string $clientIp): void
+    {
+        $this->clientIp = $clientIp;
     }
 }

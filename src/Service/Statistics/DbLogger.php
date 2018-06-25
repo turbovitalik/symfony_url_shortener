@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Statistics;
 
 use App\Entity\Link;
 use App\Entity\StatisticsEntry;
@@ -30,10 +30,12 @@ class DbLogger implements StatLoggerInterface
     public function logRequestData(Request $request, Link $link)
     {
         $userAgentData = $request->headers->get('User-Agent');
+        $clientIp = $request->getClientIp();
 
         $logEntry = new StatisticsEntry();
         $logEntry->setUserAgent($userAgentData);
         $logEntry->setLink($link);
+        $logEntry->setClientIp($clientIp);
 
         $this->statisticsRepository->save($logEntry);
     }

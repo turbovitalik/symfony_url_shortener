@@ -4,7 +4,7 @@
     <p><strong>Total visits: </strong>{{ visitsCount }}</p>
     <ul>
         {% for entry in statistics %}
-            <li>{{ entry.userAgent }}</li>
+            <li>{{ entry.userAgent }} - IP: {{ entry.clientIp }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
