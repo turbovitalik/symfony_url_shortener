@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    Hello, it's {{ page }}
+    <p>Hello, it's {{ page }}</p>
+    <p><a href="{{ path('add_link') }}">Add shortlink</a></p>
 {% endblock %}

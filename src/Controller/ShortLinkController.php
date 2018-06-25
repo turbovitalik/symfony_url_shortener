@@ -18,6 +18,10 @@ class ShortLinkController extends Controller
         //@todo: if shortlink is expired, show message
         $link = $linkRepository->findByShortCode($code);
 
+        if (!$link) {
+            throw $this->createNotFoundException("Link was not found");
+        }
+
         $statLogger->logRequestData($request, $link);
 
         $originalUrl = $link->getOriginalUrl();

@@ -22,22 +22,28 @@ class LinkManager
     }
 
     /**
-     * @param Link $link
-     * @param string $shortCode
-     * @return bool
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param $accessToken
+     * @param $expiresIn
+     * @param $originalUrl
+     * @return Link
      */
-    public function updateShortCode(Link $link, string $shortCode)
+    public function createLink($accessToken, $expiresIn, $originalUrl): Link
     {
-        $exists = $this->linkRepository->findByShortCode($shortCode);
+        $link = new Link();
+        $link->setExpiresAt(time() + $expiresIn);
+        $link->setToken($accessToken);
+        $link->setOriginalUrl($originalUrl);
 
-        if (!$exists) {
-            $link->setShortCode($shortCode);
-            $this->linkRepository->save($link);
+        $this->linkRepository->save($link);
 
-            return true;
-        }
+        return $link;
+    }
 
-        return false;
+    /**
+     * @param Link $link
+     */
+    public function updateLink(Link $link)
+    {
+        $this->linkRepository->save($link);
     }
 }

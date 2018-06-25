@@ -27,8 +27,8 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    AppBundle\Service\TinyWebShortener: ~
+    AppBundle\Service\FromPrimaryKeyGenerator: ~
     AppBundle\Service\DbLogger: ~
 
-    AppBudnle\Service\LinkShortenerInterface: '@AppBundle\Service\TinyWebShortener'
+    AppBudnle\Service\GeneratorInterface: '@AppBundle\Service\FromPrimaryKeyGenerator'
     AppBundle\Service\StatLoggerInterface: '@AppBundle\Service\DbLogger'
