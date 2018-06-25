@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Link;
 use App\Form\LinkType;
+use App\Model\LinkManager;
 use App\Repository\LinkRepository;
 use App\Service\LinkShortenerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,29 +29,26 @@ class DefaultController extends Controller
     /**
      * @Route("/add", name="add_link")
      */
-    public function addAction(Request $request, LinkRepository $linkRepository, LinkShortenerInterface $linkShortener, TokenGeneratorInterface $tokenGenerator)
+    public function addAction(Request $request, LinkRepository $linkRepository, LinkShortenerInterface $linkShortener, TokenGeneratorInterface $tokenGenerator, LinkManager $linkManager)
     {
         $pageName = 'Add new link page';
 
         $link = new Link();
 
-        $form = $this->createForm(LinkType::class, $link);
+        $form = $this->createForm(LinkType::class);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //@todo: check shortcode for uniqueness
-
+            $link = $form->getData();
 
             //@todo: refactor this
-            if (null === $link->getShortCode()) {
-                $shortCode = $linkShortener->generateShortCode();
-            } else {
+            if (null !== $link->getShortCode()) {
                 $shortCode = $form->get('shortCode')->getData();
+                $link->setShortCode($shortCode);
             }
 
-            $link->setShortCode($shortCode);
 
             $expiresIn = $form->get('expires_in')->getData();
             $token = $tokenGenerator->generateToken();
@@ -60,6 +58,17 @@ class DefaultController extends Controller
             $link->setExpiresAt(time() + $expiresIn);
 
             $linkRepository->save($link);
+
+            if (!$link->getShortCode()) {
+
+                $shortCode = $linkShortener->generateShortCode($link);
+
+                $updated = false;
+                while (!$updated) {
+                    $updated = $linkManager->updateShortCode($link, $shortCode);
+                }
+
+            }
 
             $this->addFlash(
                 'notice',
@@ -73,13 +82,5 @@ class DefaultController extends Controller
             'page' => $pageName,
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/link/{id}", name="link_details", requirements={"id": "\d+"})
-     */
-    public function linkDetailsAction(Request $request, int $id)
-    {
-        return $this->render('default/link_details.html.twig', []);
     }
 }

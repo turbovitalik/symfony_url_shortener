@@ -55,7 +55,7 @@ class LinkType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Link::class,
+            'data_class' => 'App\Entity\Link',
         ]);
     }
 }
